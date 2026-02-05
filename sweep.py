@@ -53,6 +53,8 @@ def run_single(
     settings: dict,
 ) -> dict:
     """Start a server, benchmark it, stop it, and return result dict."""
+    t_wall_start = time.monotonic()
+
     port = settings.get("port", 8080)
     log_file = os.path.join(tempfile.gettempdir(), f"draftbench_server_{port}.log")
 
@@ -88,6 +90,8 @@ def run_single(
 
     backend.stop()
 
+    wall_time = round(time.monotonic() - t_wall_start, 2)
+
     # Parse acceptance rate from logs
     acceptance = parse_acceptance_rate(log_file) if draft_path else None
 
@@ -100,6 +104,7 @@ def run_single(
         "median_tps": round(tps_stat.get("median", 0), 2),
         "mean_ttft": round(ttft_stat.get("mean", 0), 3),
         "mean_total_time": round(total_stat.get("mean", 0), 2),
+        "wall_time": wall_time,
         "acceptance_rate": round(acceptance, 4) if acceptance else None,
     }
 
