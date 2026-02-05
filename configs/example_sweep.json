@@ -1,0 +1,24 @@
+{
+  "name": "qwen25-72b",
+  "hardware": "m2ultra-128gb",
+  "backend": "llamacpp",
+  "model_family": "Qwen2.5",
+
+  "targets": [
+    {"label": "72B Q8_0",   "path": "/path/to/models/Qwen2.5-72B-Instruct-Q8_0.gguf"},
+    {"label": "72B Q4_K_M", "path": "/path/to/models/Qwen2.5-72B-Instruct-Q4_K_M.gguf"}
+  ],
+  "drafts": [
+    {"label": "0.5B Q8_0",   "path": "/path/to/models/qwen2.5-0.5b-instruct-q8_0.gguf"},
+    {"label": "1.5B Q4_K_M", "path": "/path/to/models/qwen2.5-1.5b-instruct-q4_k_m.gguf"},
+    {"label": "3B Q4_K_M",   "path": "/path/to/models/qwen2.5-3b-instruct-q4_k_m.gguf"}
+  ],
+  "settings": {
+    "runs": 1,
+    "max_tokens": 1024,
+    "temperature": 0.0,
+    "gpu_layers": 99,
+    "ctx_size": 4096,
+    "port": 8080
+  }
+}

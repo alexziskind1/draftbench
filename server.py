@@ -30,7 +30,30 @@ import requests
 # Default paths
 # ---------------------------------------------------------------------------
 
-_DEFAULT_LLAMA_BIN = os.path.expanduser("~/Code/ml/llama.cpp/build/bin/llama-server")
+def _find_llama_server() -> str | None:
+    """Search for llama-server binary in common locations."""
+    import shutil
+
+    # Check if in PATH
+    if shutil.which("llama-server"):
+        return "llama-server"
+
+    # Common build locations
+    candidates = [
+        "~/llama.cpp/build/bin/llama-server",
+        "~/Code/llama.cpp/build/bin/llama-server",
+        "/usr/local/bin/llama-server",
+        "/opt/llama.cpp/build/bin/llama-server",
+    ]
+
+    for path in candidates:
+        expanded = os.path.expanduser(path)
+        if os.path.isfile(expanded):
+            return expanded
+
+    return None
+
+_DEFAULT_LLAMA_BIN = _find_llama_server()
 
 
 # ---------------------------------------------------------------------------
@@ -310,7 +333,7 @@ def main():
     p_llama.add_argument("--port", type=int, default=8080, help="Port (default: 8080)")
     p_llama.add_argument("--gpu-layers", type=int, default=99, help="Number of GPU layers to offload (default: 99)")
     p_llama.add_argument("--ctx-size", type=int, default=4096, help="Context size (default: 4096)")
-    p_llama.add_argument("--llama-bin", default=None, help=f"Path to llama-server binary (default: {_DEFAULT_LLAMA_BIN})")
+    p_llama.add_argument("--llama-bin", default=None, help="Path to llama-server binary (auto-detected from PATH or common locations)")
     p_llama.add_argument("extra_args", nargs="*", help="Extra arguments passed to llama-server")
 
     # -- lm-studio --
