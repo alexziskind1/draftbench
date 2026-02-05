@@ -1,4 +1,9 @@
 {
+  "name": "qwen25-14b",
+  "hardware": "m2ultra-128gb",
+  "backend": "llamacpp",
+  "model_family": "Qwen2.5",
+
   "targets": [
     {"label": "14B FP16",   "path": "/Users/alex/models/bartowski/Qwen2.5-14B-Instruct-GGUF/Qwen2.5-14B-Instruct-f16.gguf"},
     {"label": "14B Q8_0",   "path": "/Users/alex/models/bartowski/Qwen2.5-14B-Instruct-GGUF/Qwen2.5-14B-Instruct-Q8_0.gguf"},

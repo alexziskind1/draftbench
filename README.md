@@ -90,6 +90,11 @@ Create `configs/my_sweep.json`:
 
 ```json
 {
+  "name": "qwen25-72b",
+  "hardware": "m2ultra-128gb",
+  "backend": "llamacpp",
+  "model_family": "Qwen2.5",
+
   "targets": [
     {"label": "72B Q8_0", "path": "/path/to/Qwen2.5-72B-Instruct-Q8_0.gguf"},
     {"label": "72B Q4_K_M", "path": "/path/to/Qwen2.5-72B-Instruct-Q4_K_M.gguf"}
@@ -101,7 +106,7 @@ Create `configs/my_sweep.json`:
   ],
   "settings": {
     "runs": 1,
-    "max_tokens": 512,
+    "max_tokens": 1024,
     "temperature": 0.0,
     "gpu_layers": 99,
     "ctx_size": 4096,
@@ -110,17 +115,29 @@ Create `configs/my_sweep.json`:
 }
 ```
 
+**Metadata fields:**
+- `name`: Short identifier for this sweep (used in filenames)
+- `hardware`: Hardware identifier (e.g., `m2ultra-128gb`, `rtx4090-24gb`)
+- `backend`: Inference backend (`llamacpp`, `vllm`, `lmstudio`)
+- `model_family`: Model family name for chart titles
+
 ### 2. Run the Sweep
 
 ```bash
-python sweep.py --config configs/my_sweep.json --results results.json --chart chart.html
+# Auto-generates filenames from config metadata
+python sweep.py --config configs/sweep_72b.json
+# Creates: results/m2ultra-128gb_llamacpp_qwen25-72b.json
+#          results/m2ultra-128gb_llamacpp_qwen25-72b.html
+
+# Or specify custom paths
+python sweep.py --config configs/sweep_72b.json --results results/custom.json --chart results/custom.html
 ```
 
 This will:
 1. Test each target model without a draft (baseline)
 2. Test each target + draft combination
-3. Save results incrementally to `results.json`
-4. Generate interactive charts in `chart.html`
+3. Save results incrementally to JSON (with hardware/backend metadata)
+4. Generate interactive charts in HTML
 
 **Example output:**
 ```
@@ -207,11 +224,15 @@ Hover over any cell for details.
 
 ## Results Format
 
-Results are saved as JSON:
+Results are saved as JSON with full metadata:
 
 ```json
 {
   "timestamp": "2026-02-05T01:18:17.066992+00:00",
+  "name": "qwen25-72b",
+  "hardware": "m2ultra-128gb",
+  "backend": "llamacpp",
+  "model_family": "Qwen2.5",
   "settings": { ... },
   "results": [
     {

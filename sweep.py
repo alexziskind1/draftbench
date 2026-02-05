@@ -127,7 +127,7 @@ def run_sweep(config: dict, results_path: str) -> list[dict]:
         result = run_single(target_path, None, f"{target_label} baseline", settings)
         entry = {"target": target_label, "draft": None, **result}
         results.append(entry)
-        _save_results(results, settings, results_path)
+        _save_results(results, config, results_path)
         _print_summary(entry)
         print()
 
@@ -144,7 +144,7 @@ def run_sweep(config: dict, results_path: str) -> list[dict]:
             result = run_single(target_path, draft_path, combo_label, settings)
             entry = {"target": target_label, "draft": draft_label, **result}
             results.append(entry)
-            _save_results(results, settings, results_path)
+            _save_results(results, config, results_path)
             _print_summary(entry)
             print()
 
@@ -164,13 +164,18 @@ def _print_summary(entry: dict):
     print(f"  Result: {', '.join(parts)}")
 
 
-def _save_results(results: list[dict], settings: dict, path: str):
+def _save_results(results: list[dict], config: dict, path: str):
     """Incrementally save results to JSON."""
     data = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "settings": settings,
+        "name": config.get("name", "unnamed"),
+        "hardware": config.get("hardware", "unknown"),
+        "backend": config.get("backend", "unknown"),
+        "model_family": config.get("model_family", "unknown"),
+        "settings": config.get("settings", {}),
         "results": results,
     }
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w") as f:
         json.dump(data, f, indent=2)
 
@@ -179,8 +184,14 @@ def _save_results(results: list[dict], settings: dict, path: str):
 # Chart generation
 # ---------------------------------------------------------------------------
 
-def generate_chart(results: list[dict], output_path: str):
+def generate_chart(results: list[dict], output_path: str, metadata: dict = None):
     """Generate a standalone HTML file with Plotly charts."""
+    metadata = metadata or {}
+    hardware = metadata.get("hardware", "Unknown Hardware")
+    backend = metadata.get("backend", "unknown")
+    model_family = metadata.get("model_family", "")
+    chart_title = f"Speculative Decoding Benchmark"
+    chart_subtitle = f"{model_family} on {hardware} ({backend})".strip()
 
     # Group results by target
     targets_seen = []
@@ -392,8 +403,8 @@ def generate_chart(results: list[dict], output_path: str):
     </style>
 </head>
 <body>
-    <h1>Speculative Decoding Benchmark</h1>
-    <h2>Qwen 2.5 Model Family on Apple Silicon</h2>
+    <h1>{chart_title}</h1>
+    <h2>{chart_subtitle}</h2>
 
     <div class="chart">
         <div class="chart-title">Throughput Comparison (tokens/sec)</div>
@@ -507,24 +518,37 @@ def generate_chart(results: list[dict], output_path: str):
 # CLI
 # ---------------------------------------------------------------------------
 
+def _generate_output_paths(config: dict) -> tuple[str, str]:
+    """Generate output paths from config metadata."""
+    hardware = config.get("hardware", "unknown")
+    backend = config.get("backend", "unknown")
+    name = config.get("name", "sweep")
+
+    base = f"results/{hardware}_{backend}_{name}"
+    return f"{base}.json", f"{base}.html"
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Run speculative decoding benchmark sweep and generate charts.",
     )
     parser.add_argument("--config", help="Path to sweep config JSON file")
-    parser.add_argument("--results", default="results/results.json", help="Path to results JSON file")
-    parser.add_argument("--chart", default="results/chart.html", help="Path to output HTML chart")
+    parser.add_argument("--results", help="Path to results JSON file (auto-generated from config if not specified)")
+    parser.add_argument("--chart", help="Path to output HTML chart (auto-generated from config if not specified)")
     parser.add_argument("--chart-only", action="store_true", help="Skip benchmarking, just generate chart from existing results")
 
     args = parser.parse_args()
 
     if args.chart_only:
+        if not args.results:
+            parser.error("--results is required when using --chart-only")
         if not os.path.isfile(args.results):
             print(f"Error: results file not found: {args.results}", file=sys.stderr)
             sys.exit(1)
         with open(args.results) as f:
             data = json.load(f)
-        generate_chart(data["results"], args.chart)
+        chart_path = args.chart or args.results.replace(".json", ".html")
+        generate_chart(data["results"], chart_path, data)
         return
 
     if not args.config:
@@ -533,13 +557,18 @@ def main():
     with open(args.config) as f:
         config = json.load(f)
 
-    results = run_sweep(config, args.results)
+    # Auto-generate paths from config metadata if not specified
+    auto_results, auto_chart = _generate_output_paths(config)
+    results_path = args.results or auto_results
+    chart_path = args.chart or auto_chart
+
+    results = run_sweep(config, results_path)
 
     print(f"\n{'='*60}")
-    print(f"  Sweep complete. Results saved to {args.results}")
+    print(f"  Sweep complete. Results saved to {results_path}")
     print(f"{'='*60}\n")
 
-    generate_chart(results, args.chart)
+    generate_chart(results, chart_path, config)
 
 
 if __name__ == "__main__":

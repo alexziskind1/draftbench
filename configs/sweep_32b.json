@@ -1,4 +1,9 @@
 {
+  "name": "qwen25-32b",
+  "hardware": "m2ultra-128gb",
+  "backend": "llamacpp",
+  "model_family": "Qwen2.5",
+
   "targets": [
     {"label": "32B Q8_0",   "path": "/Users/alex/models/bartowski/Qwen2.5-32B-Instruct-GGUF/Qwen2.5-32B-Instruct-Q8_0.gguf"},
     {"label": "32B Q4_K_M", "path": "/Users/alex/models/bartowski/Qwen2.5-32B-Instruct-GGUF/Qwen2.5-32B-Instruct-Q4_K_M.gguf"},

@@ -1,4 +1,9 @@
 {
+  "name": "qwen25-7b",
+  "hardware": "m2ultra-128gb",
+  "backend": "llamacpp",
+  "model_family": "Qwen2.5",
+
   "targets": [
     {"label": "7B FP16",   "path": "/Users/alex/models/Qwen/Qwen2.5-7B-Instruct-GGUF/qwen2.5-7b-instruct-fp16-00001-of-00004.gguf"},
     {"label": "7B Q8_0",   "path": "/Users/alex/models/Qwen/Qwen2.5-7B-Instruct-GGUF/qwen2.5-7b-instruct-q8_0-00001-of-00003.gguf"},
