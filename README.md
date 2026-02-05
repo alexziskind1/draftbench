@@ -140,9 +140,6 @@ python sweep.py --config configs/my_sweep.json
 # Creates: results/<hardware>_<backend>_<name>.json
 #          results/<hardware>_<backend>_<name>.html
 
-# Run ALL configs in a directory (excludes example_*.json templates)
-python sweep.py --config-dir configs/
-
 # Or specify custom output paths
 python sweep.py --config configs/my_sweep.json --results results/custom.json --chart results/custom.html
 ```
@@ -152,6 +149,16 @@ This will:
 2. Test each target + draft combination
 3. Save results incrementally to JSON (with hardware/backend metadata)
 4. Generate interactive charts in HTML
+
+### Running Multiple Configs
+
+If you have several config files (e.g., one per target model size), you can run them all in sequence:
+
+```bash
+python sweep.py --config-dir configs/
+```
+
+This finds all `*.json` files in the directory (excluding `example_*.json` templates), runs each sweep back-to-back, and generates separate results and charts for each. If one config fails, it skips to the next and reports a summary at the end.
 
 **Example output:**
 ```
@@ -280,8 +287,9 @@ draftbench/
 ├── sweep.py          # Automated sweep + chart generation
 ├── configs/          # Sweep configuration files
 │   └── example_sweep.json  # Template - copy and customize
-├── results_*.json    # Benchmark results
-├── chart_*.html      # Generated visualizations
+├── results/          # Benchmark results and charts (auto-generated)
+│   ├── *.json        # Raw results with metadata
+│   └── *.html        # Interactive Plotly visualizations
 └── README.md
 ```
 
