@@ -10,8 +10,8 @@ env/
 .env
 
 # Results and charts (regenerable)
-results/*.json
-results/*.html
+# results/*.json
+# results/*.html
 
 # Logs
 *.log

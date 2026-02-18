@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>draftbench - Speculative Decoding Sweep</title>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #888;
+            font-weight: normal;
+            margin-top: 0;
+        }
+        .chart {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .chart-title {
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Speculative Decoding Benchmark</h1>
+    <h2>Qwen2.5 on m4max-128gb (llamacpp)</h2>
+
+    <div class="chart">
+        <div class="chart-title">Throughput Comparison (tokens/sec)</div>
+        <div id="summary-chart"></div>
+    </div>
+
+    <div class="chart">
+        <div class="chart-title">Speedup vs Baseline (%)</div>
+        <div id="speedup-chart"></div>
+    </div>
+
+    <div class="chart">
+        <div class="chart-title">Full Results Heatmap (% Speedup)</div>
+        <div id="heatmap-chart"></div>
+    </div>
+
+    <script>
+        var darkLayout = {
+            paper_bgcolor: '#16213e',
+            plot_bgcolor: '#16213e',
+            font: { color: '#eee' },
+            xaxis: { gridcolor: '#2a3a5e', title: 'Target Model' },
+            yaxis: { gridcolor: '#2a3a5e' },
+        };
+
+        var summaryTraces = [{"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [13.33, 20.72, 23.56], "text": ["13.3", "20.7", "23.6"], "textposition": "outside", "name": "Baseline (no draft)", "type": "bar", "marker": {"color": "#636EFA"}}, {"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [30.64, 29.85, 32.88], "text": ["30.6", "29.9", "32.9"], "textposition": "outside", "hovertext": ["0.5B Q6_K<br>30.6 tok/s<br>66% acceptance", "0.5B Q5_K_M<br>29.9 tok/s<br>66% acceptance", "0.5B Q4_K_M<br>32.9 tok/s<br>76% acceptance"], "hoverinfo": "text", "name": "Best 0.5B Draft", "type": "bar", "marker": {"color": "#EF553B"}}, {"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [33.37, 33.11, 36.49], "text": ["33.4", "33.1", "36.5"], "textposition": "outside", "hovertext": ["1.5B Q6_K<br>33.4 tok/s<br>79% acceptance", "1.5B Q6_K<br>33.1 tok/s<br>79% acceptance", "1.5B Q4_K_M<br>36.5 tok/s<br>86% acceptance"], "hoverinfo": "text", "name": "Best 1.5B Draft", "type": "bar", "marker": {"color": "#00CC96"}}, {"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [31.09, 30.63, 33.82], "text": ["31.1", "30.6", "33.8"], "textposition": "outside", "hovertext": ["3B Q4_0<br>31.1 tok/s<br>70% acceptance", "3B Q4_0<br>30.6 tok/s<br>72% acceptance", "3B Q4_K_M<br>33.8 tok/s<br>83% acceptance"], "hoverinfo": "text", "name": "Best 3B Draft", "type": "bar", "marker": {"color": "#AB63FA"}}, {"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [29.26, 28.98, 31.09], "text": ["29.3", "29.0", "31.1"], "textposition": "outside", "hovertext": ["7B Q4_0<br>29.3 tok/s<br>80% acceptance", "7B Q4_0<br>29.0 tok/s<br>80% acceptance", "7B Q4_0<br>31.1 tok/s<br>87% acceptance"], "hoverinfo": "text", "name": "Best 7B Draft", "type": "bar", "marker": {"color": "#FFA15A"}}];
+        Plotly.newPlot('summary-chart', summaryTraces, {
+            ...darkLayout,
+            barmode: 'group',
+            yaxis: { ...darkLayout.yaxis, title: 'Tokens per Second' },
+            legend: { orientation: 'h', y: -0.15, font: { color: '#eee' } },
+            margin: { b: 80, t: 20 },
+            height: 400,
+        }, { responsive: true });
+
+        var speedupTraces = [{"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [129.9, 44.1, 39.6], "text": ["+130%", "+44%", "+40%"], "textposition": "outside", "hovertext": ["0.5B Q6_K<br>+129.9% speedup<br>66% acceptance", "0.5B Q5_K_M<br>+44.1% speedup<br>66% acceptance", "0.5B Q4_K_M<br>+39.6% speedup<br>76% acceptance"], "hoverinfo": "text", "name": "Best 0.5B Draft", "type": "bar", "marker": {"color": "#EF553B"}}, {"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [150.3, 59.8, 54.9], "text": ["+150%", "+60%", "+55%"], "textposition": "outside", "hovertext": ["1.5B Q6_K<br>+150.3% speedup<br>79% acceptance", "1.5B Q6_K<br>+59.8% speedup<br>79% acceptance", "1.5B Q4_K_M<br>+54.9% speedup<br>86% acceptance"], "hoverinfo": "text", "name": "Best 1.5B Draft", "type": "bar", "marker": {"color": "#00CC96"}}, {"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [133.2, 47.8, 43.5], "text": ["+133%", "+48%", "+44%"], "textposition": "outside", "hovertext": ["3B Q4_0<br>+133.2% speedup<br>70% acceptance", "3B Q4_0<br>+47.8% speedup<br>72% acceptance", "3B Q4_K_M<br>+43.5% speedup<br>83% acceptance"], "hoverinfo": "text", "name": "Best 3B Draft", "type": "bar", "marker": {"color": "#AB63FA"}}, {"x": ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"], "y": [119.5, 39.9, 32.0], "text": ["+120%", "+40%", "+32%"], "textposition": "outside", "hovertext": ["7B Q4_0<br>+119.5% speedup<br>80% acceptance", "7B Q4_0<br>+39.9% speedup<br>80% acceptance", "7B Q4_0<br>+32.0% speedup<br>87% acceptance"], "hoverinfo": "text", "name": "Best 7B Draft", "type": "bar", "marker": {"color": "#FFA15A"}}];
+        Plotly.newPlot('speedup-chart', speedupTraces, {
+            ...darkLayout,
+            barmode: 'group',
+            yaxis: { ...darkLayout.yaxis, title: 'Speedup (%)' },
+            legend: { orientation: 'h', y: -0.15, font: { color: '#eee' } },
+            margin: { b: 80, t: 20 },
+            height: 400,
+            shapes: [{
+                type: 'line', x0: 0, x1: 1, xref: 'paper',
+                y0: 0, y1: 0, yref: 'y',
+                line: { color: '#666', width: 2, dash: 'dash' }
+            }]
+        }, { responsive: true });
+
+        var heatmapTrace = [{
+            z: [[124.4, 40.8, 35.7], [121.1, 35.6, 34.0], [128.8, 40.6, 37.9], [126.7, 39.8, 39.1], [129.0, 41.2, 39.6], [127.6, 43.3, 38.9], [127.1, 44.1, 37.9], [129.9, 42.7, 38.5], [129.7, 41.8, 39.1], [125.8, 42.9, 35.9], [95.9, 19.5, 21.4], [132.5, 44.1, 46.0], [142.8, 52.3, 49.3], [148.0, 58.4, 54.9], [146.7, 56.9, 50.2], [144.7, 54.4, 51.8], [150.3, 59.8, 54.6], [145.2, 55.2, 50.8], [84.9, 18.7, 13.5], [133.2, 47.8, 42.0], [131.4, 47.0, 43.5], [113.7, 37.8, 33.2], [38.0, -10.5, -17.7], [92.8, 20.2, 20.9], [91.4, 22.2, 17.3], [119.5, 39.9, 32.0], [114.3, 36.3, 31.4], [102.4, 29.4, 22.2], [92.0, 23.3, 15.4], [98.3, 27.8, 20.2], [85.0, 18.6, 12.2]],
+            x: ["32B Q8_0", "32B Q4_K_M", "32B Q4_0"],
+            y: ["0.5B FP16", "0.5B Q2_K", "0.5B Q3_K_M", "0.5B Q4_0", "0.5B Q4_K_M", "0.5B Q5_0", "0.5B Q5_K_M", "0.5B Q6_K", "0.5B Q8_0", "1.5B FP16", "1.5B Q2_K", "1.5B Q3_K_M", "1.5B Q4_0", "1.5B Q4_K_M", "1.5B Q5_0", "1.5B Q5_K_M", "1.5B Q6_K", "1.5B Q8_0", "3B FP16", "3B Q4_0", "3B Q4_K_M", "3B Q8_0", "7B FP16", "7B Q2_K", "7B Q3_K_M", "7B Q4_0", "7B Q4_K_M", "7B Q5_0", "7B Q5_K_M", "7B Q6_K", "7B Q8_0"],
+            hovertemplate: '<b>%{y}</b> → %{x}<br>Speedup: <b>%{z:.1f}%</b><extra></extra>',
+            type: 'heatmap',
+            colorscale: [
+                [0, '#dc3545'],
+                [0.4, '#fd7e14'],
+                [0.5, '#ffc107'],
+                [0.7, '#28a745'],
+                [1, '#00ff88']
+            ],
+            zmin: 0,
+            zmax: 85,
+            colorbar: {
+                title: 'Speedup %',
+                tickfont: { color: '#eee', size: 14 },
+                titlefont: { color: '#eee', size: 14 },
+                tickvals: [0, 20, 40, 60, 80],
+                ticktext: ['0%', '+20%', '+40%', '+60%', '+80%'],
+                len: 0.9
+            },
+            hoverongaps: false,
+            xgap: 2,
+            ygap: 1,
+        }];
+
+        var numDrafts = ["0.5B FP16", "0.5B Q2_K", "0.5B Q3_K_M", "0.5B Q4_0", "0.5B Q4_K_M", "0.5B Q5_0", "0.5B Q5_K_M", "0.5B Q6_K", "0.5B Q8_0", "1.5B FP16", "1.5B Q2_K", "1.5B Q3_K_M", "1.5B Q4_0", "1.5B Q4_K_M", "1.5B Q5_0", "1.5B Q5_K_M", "1.5B Q6_K", "1.5B Q8_0", "3B FP16", "3B Q4_0", "3B Q4_K_M", "3B Q8_0", "7B FP16", "7B Q2_K", "7B Q3_K_M", "7B Q4_0", "7B Q4_K_M", "7B Q5_0", "7B Q5_K_M", "7B Q6_K", "7B Q8_0"].length;
+        var heatmapHeight = Math.max(500, numDrafts * 22 + 100);
+
+        Plotly.newPlot('heatmap-chart', heatmapTrace, {
+            ...darkLayout,
+            xaxis: {
+                ...darkLayout.xaxis,
+                side: 'top',
+                tickfont: { size: 14, color: '#eee' },
+                tickangle: 0
+            },
+            yaxis: {
+                ...darkLayout.yaxis,
+                title: '',
+                autorange: 'reversed',
+                tickfont: { size: 12, color: '#eee' },
+                dtick: 1
+            },
+            margin: { l: 100, t: 50, b: 20, r: 100 },
+            height: heatmapHeight,
+        }, { responsive: true });
+    </script>
+</body>
+</html>

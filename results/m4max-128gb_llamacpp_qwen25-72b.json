@@ -1,0 +1,658 @@
+{
+  "timestamp": "2026-02-05T20:30:49.232506+00:00",
+  "name": "qwen25-72b",
+  "hardware": "m4max-128gb",
+  "backend": "llamacpp",
+  "model_family": "Qwen2.5",
+  "settings": {
+    "llama_bin": "/Users/alex/Code/ml/llama.cpp/build/bin/llama-server",
+    "runs": 1,
+    "max_tokens": 1024,
+    "temperature": 0.0,
+    "gpu_layers": 99,
+    "ctx_size": 4096,
+    "port": 8080
+  },
+  "results": [
+    {
+      "target": "72B Q8_0",
+      "draft": null,
+      "mean_tps": 6.45,
+      "median_tps": 6.45,
+      "mean_ttft": 0.772,
+      "mean_total_time": 159.4,
+      "wall_time": 511.83,
+      "acceptance_rate": null
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B FP16",
+      "mean_tps": 17.04,
+      "median_tps": 18.31,
+      "mean_ttft": 0.803,
+      "mean_total_time": 62.22,
+      "wall_time": 192.3,
+      "acceptance_rate": 0.744
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q8_0",
+      "mean_tps": 17.16,
+      "median_tps": 18.48,
+      "mean_ttft": 0.806,
+      "mean_total_time": 61.95,
+      "wall_time": 190.89,
+      "acceptance_rate": 0.7429
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q6_K",
+      "mean_tps": 17.17,
+      "median_tps": 18.26,
+      "mean_ttft": 0.807,
+      "mean_total_time": 61.81,
+      "wall_time": 190.34,
+      "acceptance_rate": 0.7505
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q5_K_M",
+      "mean_tps": 17.28,
+      "median_tps": 18.5,
+      "mean_ttft": 0.797,
+      "mean_total_time": 61.45,
+      "wall_time": 188.85,
+      "acceptance_rate": 0.7432
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q5_0",
+      "mean_tps": 16.75,
+      "median_tps": 17.65,
+      "mean_ttft": 0.798,
+      "mean_total_time": 63.37,
+      "wall_time": 194.82,
+      "acceptance_rate": 0.7405
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q4_K_M",
+      "mean_tps": 16.86,
+      "median_tps": 17.98,
+      "mean_ttft": 0.802,
+      "mean_total_time": 62.94,
+      "wall_time": 193.38,
+      "acceptance_rate": 0.7422
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q4_0",
+      "mean_tps": 16.25,
+      "median_tps": 17.15,
+      "mean_ttft": 0.797,
+      "mean_total_time": 65.08,
+      "wall_time": 199.94,
+      "acceptance_rate": 0.7199
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q3_K_M",
+      "mean_tps": 16.92,
+      "median_tps": 17.81,
+      "mean_ttft": 0.818,
+      "mean_total_time": 62.8,
+      "wall_time": 193.38,
+      "acceptance_rate": 0.7467
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "0.5B Q2_K",
+      "mean_tps": 16.2,
+      "median_tps": 17.4,
+      "mean_ttft": 0.872,
+      "mean_total_time": 65.43,
+      "wall_time": 200.94,
+      "acceptance_rate": 0.7429
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B FP16",
+      "mean_tps": 18.05,
+      "median_tps": 17.9,
+      "mean_ttft": 0.797,
+      "mean_total_time": 57.57,
+      "wall_time": 178.25,
+      "acceptance_rate": 0.8523
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q8_0",
+      "mean_tps": 18.93,
+      "median_tps": 18.55,
+      "mean_ttft": 0.813,
+      "mean_total_time": 54.97,
+      "wall_time": 170.73,
+      "acceptance_rate": 0.858
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q6_K",
+      "mean_tps": 19.33,
+      "median_tps": 19.0,
+      "mean_ttft": 0.805,
+      "mean_total_time": 53.93,
+      "wall_time": 167.78,
+      "acceptance_rate": 0.8388
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q5_K_M",
+      "mean_tps": 18.96,
+      "median_tps": 18.84,
+      "mean_ttft": 0.81,
+      "mean_total_time": 54.98,
+      "wall_time": 170.59,
+      "acceptance_rate": 0.843
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q5_0",
+      "mean_tps": 19.17,
+      "median_tps": 18.76,
+      "mean_ttft": 0.797,
+      "mean_total_time": 54.36,
+      "wall_time": 167.56,
+      "acceptance_rate": 0.854
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q4_K_M",
+      "mean_tps": 19.11,
+      "median_tps": 18.9,
+      "mean_ttft": 0.8,
+      "mean_total_time": 54.72,
+      "wall_time": 168.58,
+      "acceptance_rate": 0.8421
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q4_0",
+      "mean_tps": 18.62,
+      "median_tps": 18.78,
+      "mean_ttft": 0.802,
+      "mean_total_time": 55.94,
+      "wall_time": 172.72,
+      "acceptance_rate": 0.819
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q3_K_M",
+      "mean_tps": 18.26,
+      "median_tps": 18.3,
+      "mean_ttft": 0.804,
+      "mean_total_time": 57.26,
+      "wall_time": 176.78,
+      "acceptance_rate": 0.8182
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "1.5B Q2_K",
+      "mean_tps": 14.96,
+      "median_tps": 15.72,
+      "mean_ttft": 0.787,
+      "mean_total_time": 70.02,
+      "wall_time": 214.95,
+      "acceptance_rate": 0.7293
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "3B FP16",
+      "mean_tps": 16.82,
+      "median_tps": 16.93,
+      "mean_ttft": 0.779,
+      "mean_total_time": 61.68,
+      "wall_time": 191.54,
+      "acceptance_rate": 0.8383
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "3B Q8_0",
+      "mean_tps": 18.32,
+      "median_tps": 18.19,
+      "mean_ttft": 0.803,
+      "mean_total_time": 56.71,
+      "wall_time": 175.8,
+      "acceptance_rate": 0.8401
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "3B Q4_K_M",
+      "mean_tps": 19.09,
+      "median_tps": 18.95,
+      "mean_ttft": 0.815,
+      "mean_total_time": 54.46,
+      "wall_time": 169.25,
+      "acceptance_rate": 0.8325
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "3B Q4_0",
+      "mean_tps": 18.81,
+      "median_tps": 19.02,
+      "mean_ttft": 0.809,
+      "mean_total_time": 55.36,
+      "wall_time": 171.68,
+      "acceptance_rate": 0.8085
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B FP16",
+      "mean_tps": 13.72,
+      "median_tps": 13.82,
+      "mean_ttft": 0.766,
+      "mean_total_time": 75.37,
+      "wall_time": 235.81,
+      "acceptance_rate": 0.8458
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q8_0",
+      "mean_tps": 16.52,
+      "median_tps": 16.5,
+      "mean_ttft": 0.804,
+      "mean_total_time": 62.76,
+      "wall_time": 196.11,
+      "acceptance_rate": 0.8476
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q6_K",
+      "mean_tps": 17.29,
+      "median_tps": 17.18,
+      "mean_ttft": 0.802,
+      "mean_total_time": 60.0,
+      "wall_time": 186.91,
+      "acceptance_rate": 0.8495
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q5_K_M",
+      "mean_tps": 16.68,
+      "median_tps": 16.66,
+      "mean_ttft": 0.809,
+      "mean_total_time": 62.16,
+      "wall_time": 193.16,
+      "acceptance_rate": 0.8581
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q5_0",
+      "mean_tps": 17.25,
+      "median_tps": 17.06,
+      "mean_ttft": 0.805,
+      "mean_total_time": 60.16,
+      "wall_time": 187.39,
+      "acceptance_rate": 0.8569
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q4_K_M",
+      "mean_tps": 18.03,
+      "median_tps": 17.81,
+      "mean_ttft": 0.812,
+      "mean_total_time": 57.64,
+      "wall_time": 179.83,
+      "acceptance_rate": 0.8636
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q4_0",
+      "mean_tps": 18.34,
+      "median_tps": 18.32,
+      "mean_ttft": 0.809,
+      "mean_total_time": 56.65,
+      "wall_time": 176.81,
+      "acceptance_rate": 0.8524
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q3_K_M",
+      "mean_tps": 16.63,
+      "median_tps": 16.82,
+      "mean_ttft": 0.823,
+      "mean_total_time": 62.55,
+      "wall_time": 193.67,
+      "acceptance_rate": 0.8396
+    },
+    {
+      "target": "72B Q8_0",
+      "draft": "7B Q2_K",
+      "mean_tps": 16.05,
+      "median_tps": 16.22,
+      "mean_ttft": 0.812,
+      "mean_total_time": 65.02,
+      "wall_time": 200.7,
+      "acceptance_rate": 0.7854
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": null,
+      "mean_tps": 9.36,
+      "median_tps": 9.35,
+      "mean_ttft": 0.865,
+      "mean_total_time": 110.18,
+      "wall_time": 348.17,
+      "acceptance_rate": null
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B FP16",
+      "mean_tps": 16.12,
+      "median_tps": 15.83,
+      "mean_ttft": 0.843,
+      "mean_total_time": 65.63,
+      "wall_time": 201.8,
+      "acceptance_rate": 0.752
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q8_0",
+      "mean_tps": 16.37,
+      "median_tps": 16.14,
+      "mean_ttft": 0.822,
+      "mean_total_time": 64.82,
+      "wall_time": 198.21,
+      "acceptance_rate": 0.7515
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q6_K",
+      "mean_tps": 16.37,
+      "median_tps": 16.14,
+      "mean_ttft": 0.818,
+      "mean_total_time": 64.75,
+      "wall_time": 197.72,
+      "acceptance_rate": 0.7543
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q5_K_M",
+      "mean_tps": 17.14,
+      "median_tps": 18.13,
+      "mean_ttft": 0.833,
+      "mean_total_time": 62.08,
+      "wall_time": 190.07,
+      "acceptance_rate": 0.749
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q5_0",
+      "mean_tps": 16.84,
+      "median_tps": 18.13,
+      "mean_ttft": 0.813,
+      "mean_total_time": 63.35,
+      "wall_time": 193.64,
+      "acceptance_rate": 0.7422
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q4_K_M",
+      "mean_tps": 16.67,
+      "median_tps": 18.29,
+      "mean_ttft": 0.807,
+      "mean_total_time": 63.62,
+      "wall_time": 194.67,
+      "acceptance_rate": 0.746
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q4_0",
+      "mean_tps": 16.12,
+      "median_tps": 17.11,
+      "mean_ttft": 0.813,
+      "mean_total_time": 65.84,
+      "wall_time": 201.25,
+      "acceptance_rate": 0.713
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q3_K_M",
+      "mean_tps": 16.65,
+      "median_tps": 17.89,
+      "mean_ttft": 0.809,
+      "mean_total_time": 63.84,
+      "wall_time": 195.16,
+      "acceptance_rate": 0.7472
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "0.5B Q2_K",
+      "mean_tps": 15.65,
+      "median_tps": 16.8,
+      "mean_ttft": 0.89,
+      "mean_total_time": 67.38,
+      "wall_time": 205.91,
+      "acceptance_rate": 0.748
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B FP16",
+      "mean_tps": 17.16,
+      "median_tps": 16.89,
+      "mean_ttft": 0.814,
+      "mean_total_time": 61.04,
+      "wall_time": 188.11,
+      "acceptance_rate": 0.8507
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q8_0",
+      "mean_tps": 17.97,
+      "median_tps": 17.6,
+      "mean_ttft": 0.809,
+      "mean_total_time": 58.45,
+      "wall_time": 180.27,
+      "acceptance_rate": 0.8515
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q6_K",
+      "mean_tps": 17.97,
+      "median_tps": 17.86,
+      "mean_ttft": 0.789,
+      "mean_total_time": 58.04,
+      "wall_time": 177.72,
+      "acceptance_rate": 0.8324
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q5_K_M",
+      "mean_tps": 18.65,
+      "median_tps": 18.41,
+      "mean_ttft": 0.797,
+      "mean_total_time": 55.82,
+      "wall_time": 171.22,
+      "acceptance_rate": 0.841
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q5_0",
+      "mean_tps": 18.03,
+      "median_tps": 17.63,
+      "mean_ttft": 0.791,
+      "mean_total_time": 57.96,
+      "wall_time": 177.72,
+      "acceptance_rate": 0.8392
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q4_K_M",
+      "mean_tps": 18.74,
+      "median_tps": 18.16,
+      "mean_ttft": 0.811,
+      "mean_total_time": 55.88,
+      "wall_time": 171.19,
+      "acceptance_rate": 0.8328
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q4_0",
+      "mean_tps": 17.97,
+      "median_tps": 17.28,
+      "mean_ttft": 0.79,
+      "mean_total_time": 58.36,
+      "wall_time": 178.73,
+      "acceptance_rate": 0.8244
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q3_K_M",
+      "mean_tps": 16.84,
+      "median_tps": 15.91,
+      "mean_ttft": 0.794,
+      "mean_total_time": 62.27,
+      "wall_time": 190.4,
+      "acceptance_rate": 0.801
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "1.5B Q2_K",
+      "mean_tps": 14.81,
+      "median_tps": 15.12,
+      "mean_ttft": 0.793,
+      "mean_total_time": 70.58,
+      "wall_time": 215.62,
+      "acceptance_rate": 0.7454
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "3B FP16",
+      "mean_tps": 16.07,
+      "median_tps": 16.05,
+      "mean_ttft": 0.802,
+      "mean_total_time": 64.72,
+      "wall_time": 199.94,
+      "acceptance_rate": 0.8624
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "3B Q8_0",
+      "mean_tps": 17.78,
+      "median_tps": 17.46,
+      "mean_ttft": 0.81,
+      "mean_total_time": 58.41,
+      "wall_time": 179.84,
+      "acceptance_rate": 0.8531
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "3B Q4_K_M",
+      "mean_tps": 18.38,
+      "median_tps": 18.01,
+      "mean_ttft": 0.82,
+      "mean_total_time": 56.62,
+      "wall_time": 174.63,
+      "acceptance_rate": 0.8405
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "3B Q4_0",
+      "mean_tps": 18.1,
+      "median_tps": 17.64,
+      "mean_ttft": 0.809,
+      "mean_total_time": 57.45,
+      "wall_time": 176.66,
+      "acceptance_rate": 0.8382
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B FP16",
+      "mean_tps": 13.34,
+      "median_tps": 13.25,
+      "mean_ttft": 0.788,
+      "mean_total_time": 77.51,
+      "wall_time": 240.5,
+      "acceptance_rate": 0.8197
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q8_0",
+      "mean_tps": 15.57,
+      "median_tps": 15.39,
+      "mean_ttft": 0.811,
+      "mean_total_time": 66.74,
+      "wall_time": 206.01,
+      "acceptance_rate": 0.8197
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q6_K",
+      "mean_tps": 16.67,
+      "median_tps": 16.28,
+      "mean_ttft": 0.826,
+      "mean_total_time": 62.29,
+      "wall_time": 192.46,
+      "acceptance_rate": 0.8216
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q5_K_M",
+      "mean_tps": 16.25,
+      "median_tps": 15.97,
+      "mean_ttft": 0.819,
+      "mean_total_time": 63.86,
+      "wall_time": 196.49,
+      "acceptance_rate": 0.8394
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q5_0",
+      "mean_tps": 16.53,
+      "median_tps": 16.53,
+      "mean_ttft": 0.814,
+      "mean_total_time": 62.97,
+      "wall_time": 193.47,
+      "acceptance_rate": 0.8545
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q4_K_M",
+      "mean_tps": 17.12,
+      "median_tps": 16.97,
+      "mean_ttft": 0.823,
+      "mean_total_time": 60.62,
+      "wall_time": 186.42,
+      "acceptance_rate": 0.837
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q4_0",
+      "mean_tps": 17.12,
+      "median_tps": 17.29,
+      "mean_ttft": 0.816,
+      "mean_total_time": 60.71,
+      "wall_time": 186.94,
+      "acceptance_rate": 0.8438
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q3_K_M",
+      "mean_tps": 16.21,
+      "median_tps": 15.96,
+      "mean_ttft": 0.808,
+      "mean_total_time": 64.08,
+      "wall_time": 196.84,
+      "acceptance_rate": 0.8367
+    },
+    {
+      "target": "72B Q4_K_M",
+      "draft": "7B Q2_K",
+      "mean_tps": 15.69,
+      "median_tps": 14.55,
+      "mean_ttft": 0.795,
+      "mean_total_time": 66.74,
+      "wall_time": 205.03,
+      "acceptance_rate": 0.7892
+    }
+  ]
+}
