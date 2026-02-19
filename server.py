@@ -35,8 +35,9 @@ def _find_llama_server() -> str | None:
     import shutil
 
     # Check if in PATH
-    if shutil.which("llama-server"):
-        return "llama-server"
+    llama_cmd = shutil.which("llama-server")
+    if llama_cmd:
+        return llama_cmd
 
     # Common build locations
     candidates = [
